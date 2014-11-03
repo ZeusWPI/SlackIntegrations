@@ -5,7 +5,7 @@ class QuotesController < ApplicationController
   respond_to :html
 
   def index
-    @quotes = Quote.all
+    @quotes = Quote.order('id DESC').all
 
     @new_quote = Quote.new
   end
@@ -15,7 +15,7 @@ class QuotesController < ApplicationController
     @quote = Quote.new quote_params
 
     @quote.save
-    redirect_to root_url
+    render plain: 'Quote created!'
   end
 
   def show
