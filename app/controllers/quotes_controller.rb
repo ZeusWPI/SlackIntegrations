@@ -15,8 +15,8 @@ class QuotesController < ApplicationController
     @quote = Quote.create quote_params
 
     call_add_quote_webhook(params, @quote)
-    
-    render plain: 'Quote created!'
+
+    head :ok, content_type: "text/html"
   end
 
   def show
@@ -28,7 +28,7 @@ class QuotesController < ApplicationController
       @quote = Quote.find_by(id: id)
       if !@quote.nil?
         call_quote_webhook(params, @quote)
-        render plain: "Komt eraan!"
+        head :ok, content_type: "text/html"
         return
       end
     end
@@ -36,7 +36,7 @@ class QuotesController < ApplicationController
     @quotes = Quote.where('text like ?', "%#{params[:text]}%")
     if !@quotes.empty?
       call_quote_webhook(params, @quotes.shuffle.first)
-      render plain: "Komt eraan!"
+      head :ok, content_type: "text/html"
     else
       render plain: 'Oei der zijn der zo geen!'
     end
@@ -44,8 +44,10 @@ class QuotesController < ApplicationController
 
   private
     def poster(params)
+      is_dm = params[:channel_name] != 'directmessage'
+      channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
       options = { icon_emoji: random_emoji,
-                  channel:    "##{params[:channel_name]}",
+                  channel:    channel_name,
                   username:   ZeusQuotes::QUOTES_BOTNAME
                 }
       poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
@@ -53,11 +55,11 @@ class QuotesController < ApplicationController
                                options)
     end
     def call_add_quote_webhook(params, quote)
-      poster(params).ping("@#{params[:user_name]} added the quote \"#{quote.text}\"")
+      poster(params).ping("@#{params[:user_name]} added the quote “#{quote.text}”")
     end
 
     def call_quote_webhook(params, quote)
-      poster(params).ping("@#{params[:user_name]} quoted \"#{quote.text}\"")
+      poster(params).ping("@#{params[:user_name]} quoted “#{quote.text}”")
     end
 
     def quote_params
@@ -83,8 +85,7 @@ class QuotesController < ApplicationController
     end
 
     def random_emoji
-      [':suspect:', ':rage1:', ':goberserk:', ':godmode:', ':rage2:',
-       ':rage3:', ':hurtrealbad:', ':rage4:', ':feelsgood:', ':finnadie:'].shuffle.first
+      [':skull:'].shuffle.first
     end
 
     # Whats a rails project without a stuckoverflow copy paste?
