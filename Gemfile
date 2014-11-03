@@ -38,3 +38,11 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem "tarumi"
+
+# Deployment
+group :deployment do
+  gem 'capistrano', '~> 3.2'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rvm'
+end
+
