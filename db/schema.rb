@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103145654) do
+ActiveRecord::Schema.define(version: 20141103220911) do
 
   create_table "quotes", force: true do |t|
     t.string   "token"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20141103145654) do
     t.string   "user_id"
     t.string   "user_name"
     t.string   "command"
-    t.text     "text",         limit: 255
+    t.text     "text",         limit: 1000
     t.datetime "created_at"
     t.datetime "updated_at"
   end
