@@ -1,8 +1,30 @@
 <div class="row">
-
+  <% if @quotes.empty? %>
+    Geen quotes :'(
+  <% else %>
+    <table class="table table-hover table-condensed">
+      <tr>
+        <th class="col-md-1">id</th>
+        <th class="col-md-1">Channel name</th>
+        <th class="col-md-1">User name</th>
+        <th class="col-md-2">Date</th>
+        <th class="col-md-7">Text</th>
+      </tr>
+      <% @quotes.each do |q| %>
+        <tr>
+          <td class="col-md-1"><%= q.id %></td>
+          <td class="col-md-1"><%= q.channel_name %></td>
+          <td class="col-md-1"><%= q.user_name %></td>
+          <td class="col-md-2"><%= q.created_at %></td>
+          <td class="col-md-7"><%= q.text %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 </div>
 
 <% if Rails.env.development? %>
+  <hr />
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       <%= form_for @new_quote, html: { class: 'form-horizontal' } do |f| %>
@@ -14,14 +36,14 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :team_id, class: 'col-sm-4 control-label' %>
+          <%= f.label :team_id, 'Team ID', class: 'col-sm-4 control-label' %>
           <div class="col-sm-8">
             <%= f.text_field :team_id, class: 'form-control', value: 'T0001' %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :channel_id, class: 'col-sm-4 control-label' %>
+          <%= f.label :channel_id, 'Channel ID', class: 'col-sm-4 control-label' %>
           <div class="col-sm-8">
             <%= f.text_field :channel_id, class: 'form-control', value: 'C2147483705' %>
           </div>
@@ -35,7 +57,7 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :user_id, class: 'col-sm-4 control-label' %>
+          <%= f.label :user_id, 'User ID', class: 'col-sm-4 control-label' %>
           <div class="col-sm-8">
             <%= f.text_field :user_id, class: 'form-control', value: 'U2147483697' %>
           </div>
