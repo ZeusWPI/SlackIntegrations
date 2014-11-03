@@ -16,7 +16,7 @@ class QuotesController < ApplicationController
 
     call_add_quote_webhook(params, @quote)
 
-    head :ok, content_type: "text/html"
+    render :ok, text: ""
   end
 
   def show
@@ -28,7 +28,7 @@ class QuotesController < ApplicationController
       @quote = Quote.find_by(id: id)
       if !@quote.nil?
         call_quote_webhook(params, @quote)
-        head :ok, content_type: "text/html"
+        render :ok, text: ""
         return
       end
     end
@@ -38,7 +38,7 @@ class QuotesController < ApplicationController
       call_quote_webhook(params, @quotes.shuffle.first)
       head :ok, content_type: "text/html"
     else
-      render plain: 'Oei der zijn der zo geen!'
+      render :ok, text: ""
     end
   end
 
