@@ -1,3 +1,6 @@
+require "uri"
+require "net/http"
+
 class QuotesController < ApplicationController
   respond_to :html
 
@@ -17,24 +20,40 @@ class QuotesController < ApplicationController
 
   def show
     text = params[:text]
+
     if numeric?(params[:text])
       id = params[:text].to_i
 
       @quote = Quote.find_by(id: id)
-
-      render plain: @quote.text if !@quote.nil?
-      return
+      if !@quote.nil?
+        call_webhook(params, @quote)
+        render plain: "Komt eraan!"
+        return
+      end
     end
 
     @quotes = Quote.where('text like ?', "%#{params[:text]}%")
     if !@quotes.empty?
-      render plain: @quotes.shuffle.first.text
+      call_webhook(params, @quotes.shuffle.first)
+      render plain: "Komt eraan!"
     else
       render plain: 'Oei der zijn der zo geen!'
     end
   end
 
   private
+    def call_webhook(params, quote)
+      options = { icon_emoji: random_emoji,
+                  channel:    "##{params[:channel_name]}",
+                  username:   ZeusQuotes::QUOTES_BOTNAME
+                }
+      poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
+                               ZeusQuotes::QUOTES_TOKEN,
+                               options)
+      puts options.to_json
+      poster.ping(quote.text)
+    end
+
     def quote_params
       params.require(:quote).permit(:token,
                                     :team_id,
@@ -44,6 +63,11 @@ class QuotesController < ApplicationController
                                     :user_name,
                                     :command,
                                     :text)
+    end
+
+    def random_emoji
+      [':suspect:', ':rage1:', ':goberserk:', ':godmode:', ':rage2:',
+       ':rage3:', ':hurtrealbad:', ':rage4:', ':feelsgood:', ':finnadie:'].shuffle.first
     end
 
     # Whats a rails project without a stuckoverflow copy paste?
