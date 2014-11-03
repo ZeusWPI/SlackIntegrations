@@ -1,33 +1,7 @@
-<div class="row">
-  <% if @quotes.empty? %>
-    Geen quotes :'(
-  <% else %>
-    <table class="table table-hover table-condensed">
-      <tr>
-        <th class="col-md-1">id</th>
-        <th class="col-md-1">Channel name</th>
-        <th class="col-md-1">User name</th>
-        <th class="col-md-2">Date</th>
-        <th class="col-md-7">Text</th>
-      </tr>
-      <% @quotes.each do |q| %>
-        <tr>
-          <td class="col-md-1"><%= q.id %></td>
-          <td class="col-md-1"><%= q.channel_name %></td>
-          <td class="col-md-1"><%= q.user_name %></td>
-          <td class="col-md-2"><%= q.created_at %></td>
-          <td class="col-md-7"><%= q.text %></td>
-        </tr>
-      <% end %>
-    </table>
-  <% end %>
-</div>
-
 <% if Rails.env.development? %>
-  <hr />
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
-      <%= form_for @new_quote, html: { class: 'form-horizontal' } do |f| %>
+      <%= form_for @new_quote, url: add_quote_path, html: { class: 'form-horizontal' } do |f| %>
         <div class="form-group">
           <%= f.label :token, class: 'col-sm-4 control-label' %>
           <div class="col-sm-8">
@@ -92,4 +66,30 @@
       <% end %>
     </div>
   </div>
+  <hr />
 <% end %>
+
+<div class="row">
+  <% if @quotes.empty? %>
+    Geen quotes :'(
+  <% else %>
+    <table class="table table-hover table-condensed">
+      <tr>
+        <th class="col-md-1">id</th>
+        <th class="col-md-1">Channel name</th>
+        <th class="col-md-1">User name</th>
+        <th class="col-md-2">Date</th>
+        <th class="col-md-7">Text</th>
+      </tr>
+      <% @quotes.each do |q| %>
+        <tr>
+          <td class="col-md-1"><%= q.id %></td>
+          <td class="col-md-1"><%= q.channel_name %></td>
+          <td class="col-md-1"><%= q.user_name %></td>
+          <td class="col-md-2"><%= q.created_at %></td>
+          <td class="col-md-7"><%= q.text %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>

@@ -2,6 +2,7 @@ require "uri"
 require "net/http"
 
 class QuotesController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:create]
   respond_to :html
 
   def index
@@ -11,7 +12,6 @@ class QuotesController < ApplicationController
   end
 
   def create
-    puts params
     @quote = Quote.new quote_params
 
     @quote.save
@@ -55,14 +55,25 @@ class QuotesController < ApplicationController
     end
 
     def quote_params
-      params.require(:quote).permit(:token,
-                                    :team_id,
-                                    :channel_id,
-                                    :channel_name,
-                                    :user_id,
-                                    :user_name,
-                                    :command,
-                                    :text)
+      if params.has_key? :quote
+        params.require(:quote).permit(:token,
+                                      :team_id,
+                                      :channel_id,
+                                      :channel_name,
+                                      :user_id,
+                                      :user_name,
+                                      :command,
+                                      :text)
+      else
+        params.permit(:token,
+                      :team_id,
+                      :channel_id,
+                      :channel_name,
+                      :user_id,
+                      :user_name,
+                      :command,
+                      :text)
+      end
     end
 
     def random_emoji
