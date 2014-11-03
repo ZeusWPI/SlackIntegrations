@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+lines = File.read(File.join(Rails.root, 'db', 'old_quotes.txt')).lines
+lines.each do |l|
+  Quote.create({
+    text: l.strip
+  })
+end
