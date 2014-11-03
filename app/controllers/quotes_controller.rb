@@ -44,7 +44,7 @@ class QuotesController < ApplicationController
 
   private
     def poster(params)
-      is_dm = params[:channel_name] != 'directmessage'
+      is_dm = params[:channel_name] == 'directmessage'
       channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
       options = { icon_emoji: random_emoji,
                   channel:    channel_name,
