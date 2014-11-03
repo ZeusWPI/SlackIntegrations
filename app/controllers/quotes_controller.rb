@@ -12,9 +12,10 @@ class QuotesController < ApplicationController
   end
 
   def create
-    @quote = Quote.new quote_params
+    @quote = Quote.create quote_params
 
-    @quote.save
+    call_add_quote_webhook(params, @quote)
+    
     render plain: 'Quote created!'
   end
 
@@ -26,7 +27,7 @@ class QuotesController < ApplicationController
 
       @quote = Quote.find_by(id: id)
       if !@quote.nil?
-        call_webhook(params, @quote)
+        call_quote_webhook(params, @quote)
         render plain: "Komt eraan!"
         return
       end
@@ -34,7 +35,7 @@ class QuotesController < ApplicationController
 
     @quotes = Quote.where('text like ?', "%#{params[:text]}%")
     if !@quotes.empty?
-      call_webhook(params, @quotes.shuffle.first)
+      call_quote_webhook(params, @quotes.shuffle.first)
       render plain: "Komt eraan!"
     else
       render plain: 'Oei der zijn der zo geen!'
@@ -42,7 +43,7 @@ class QuotesController < ApplicationController
   end
 
   private
-    def call_webhook(params, quote)
+    def poster(params)
       options = { icon_emoji: random_emoji,
                   channel:    "##{params[:channel_name]}",
                   username:   ZeusQuotes::QUOTES_BOTNAME
@@ -50,8 +51,13 @@ class QuotesController < ApplicationController
       poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
                                ZeusQuotes::QUOTES_TOKEN,
                                options)
-      puts options.to_json
-      poster.ping("@#{params[:user_name]} quoted \"#{quote.text}\"")
+    end
+    def call_add_quote_webhook(params, quote)
+      poster(params).ping("@#{params[:user_name]} added the quote \"#{quote.text}\"")
+    end
+
+    def call_quote_webhook(params, quote)
+      poster(params).ping("@#{params[:user_name]} quoted \"#{quote.text}\"")
     end
 
     def quote_params
