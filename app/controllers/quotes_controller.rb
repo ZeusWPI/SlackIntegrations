@@ -36,9 +36,9 @@ class QuotesController < ApplicationController
     @quotes = Quote.where('text like ?', "%#{params[:text]}%")
     if !@quotes.empty?
       call_quote_webhook(params, @quotes.shuffle.first)
-      head :ok, content_type: "text/html"
-    else
       render :ok, text: ""
+    else
+      render :ok, text: "No such quote :'("
     end
   end
 
