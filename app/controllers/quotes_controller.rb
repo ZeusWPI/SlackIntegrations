@@ -51,7 +51,7 @@ class QuotesController < ApplicationController
                                ZeusQuotes::QUOTES_TOKEN,
                                options)
       puts options.to_json
-      poster.ping(quote.text)
+      poster.ping("@#{params[:user_name]} quoted \"#{quote.text}\"")
     end
 
     def quote_params
