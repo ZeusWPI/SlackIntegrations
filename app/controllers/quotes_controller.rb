@@ -46,8 +46,7 @@ class QuotesController < ApplicationController
     def poster(params)
       is_dm = params[:channel_name] == 'directmessage'
       channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
-      options = { icon_emoji: random_emoji,
-                  channel:    channel_name,
+      options = { channel:    channel_name,
                   username:   params[:user_name]
                 }
       poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
@@ -82,10 +81,6 @@ class QuotesController < ApplicationController
                       :command,
                       :text)
       end
-    end
-
-    def random_emoji
-      [':skull:'].shuffle.first
     end
 
     # Whats a rails project without a stuckoverflow copy paste?
