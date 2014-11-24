@@ -44,7 +44,7 @@ class QuotesController < ApplicationController
 
   private
     def poster(params, is_add)
-      name = if is_add then "#{params[:user_name]} quoted: " else "@#{params[:user_name]} added the quote " end
+      name = if not is_add then "#{params[:user_name]} quoted: " else "@#{params[:user_name]} added the quote " end
       is_dm = params[:channel_name] == 'directmessage'
       channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
       options = { channel:    channel_name,
