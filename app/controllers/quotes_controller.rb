@@ -43,22 +43,23 @@ class QuotesController < ApplicationController
   end
 
   private
-    def poster(params)
+    def poster(params, is_add)
+      name = if is_add then "#{params[:user_name]} quoted: " else "@#{params[:user_name]} added the quote " end
       is_dm = params[:channel_name] == 'directmessage'
       channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
       options = { channel:    channel_name,
-                  username:   "#{params[:user_name]} quoted: "
+                  username:   name
                 }
       poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
                                ZeusQuotes::QUOTES_TOKEN,
                                options)
     end
     def call_add_quote_webhook(params, quote)
-      poster(params).ping("@#{params[:user_name]} added the quote “#{quote.text}”")
+      poster(params, true).ping("“#{quote.text}”")
     end
 
     def call_quote_webhook(params, quote)
-      poster(params).ping("“#{quote.text}”")
+      poster(params, false).ping("“#{quote.text}”")
     end
 
     def quote_params
