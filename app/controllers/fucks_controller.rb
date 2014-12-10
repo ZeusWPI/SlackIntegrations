@@ -20,7 +20,7 @@ class FucksController < ApplicationController
   end
 
   def create
-    name = fuck_params[:text].split()[1]
+    name = fuck_params[:text].split()[1].titleize
 
     fuck = Fuck.find_by_name name
 
