@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: fucks
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  amount     :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  amount: 1
+
+two:
+  name: MyString
+  amount: 1
