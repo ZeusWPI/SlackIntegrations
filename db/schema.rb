@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103220911) do
+ActiveRecord::Schema.define(version: 20141210132439) do
+
+  create_table "fucks", force: true do |t|
+    t.string   "name"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fucks", ["name"], name: "index_fucks_on_name"
 
   create_table "quotes", force: true do |t|
     t.string   "token"

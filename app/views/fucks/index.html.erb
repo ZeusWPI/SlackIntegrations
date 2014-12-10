@@ -1,0 +1,86 @@
+<div class="row">
+  <% if @fucks.empty? %>
+    Geen fucks :'(
+  <% else %>
+    <table class="table table-hover table-condensed">
+      <tr>
+        <th class="col-md-1">id</th>
+        <th class="col-md-1">Name</th>
+        <th class="col-md-2">Last Updated</th>
+        <th class="col-md-7">Amount</th>
+      </tr>
+      <% @fucks.each do |f| %>
+        <tr>
+          <td class="col-md-1"><%= f.id %></td>
+          <td class="col-md-1"><%= f.name %></td>
+          <td class="col-md-2"><%= f.updated_at %></td>
+          <td class="col-md-7"><%= f.amount %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>
+
+<% if Rails.env.development? %>
+  <hr />
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <%= form_for @new_fuck, html: { class: 'form-horizontal' } do |f| %>
+        <div class="form-group">
+          <%= f.label :token, class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :token, class: 'form-control', value: 'YpGqLVxCz2nXt7oFvzU4ObFe' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :team_id, 'Team ID', class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :team_id, class: 'form-control', value: 'T0001' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :channel_id, 'Channel ID', class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :channel_id, class: 'form-control', value: 'C2147483705' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :channel_name, class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :channel_name, class: 'form-control', value: 'test' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :user_id, 'User ID', class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :user_id, class: 'form-control', value: 'U2147483697' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :user_name, class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_field :user_name, class: 'form-control', value: 'Steve' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :text, class: 'col-sm-4 control-label' %>
+          <div class="col-sm-8">
+            <%= f.text_area :text, class: 'form-control', value: '94070' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <%= f.submit 'Add Quote', class: 'btn btn-primary', style: 'width: 100%' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

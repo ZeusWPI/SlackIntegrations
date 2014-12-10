@@ -11,7 +11,6 @@ class QuotesController < ApplicationController
   end
 
   def create
-    puts params
     @quote = Quote.new quote_params
 
     @quote.save
@@ -19,8 +18,6 @@ class QuotesController < ApplicationController
   end
 
   def show
-    text = params[:text]
-
     if numeric?(params[:text])
       id = params[:text].to_i
 
