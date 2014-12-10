@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 module ZeusQuotes
   QUOTES_TEAM    = 'zeuswpi'
   QUOTES_TOKEN   = 'nSkfHbEoMbSExxM0qZB3MpTa'
-  QUOTES_BOTNAME = 'Quotes'
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
