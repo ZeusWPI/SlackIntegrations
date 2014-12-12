@@ -32,7 +32,7 @@ class FucksController < ApplicationController
 
     out = Hash.new
     if fuck.save!
-      out[:text] = "Incremented fucks for #{name}, total #{fuck.amount}"
+      out[:text] = "Fuck #{name}: #{fuck.amount}"
     else
       out[:text] = "Failure"
     end
