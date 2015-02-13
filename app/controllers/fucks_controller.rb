@@ -20,24 +20,30 @@ class FucksController < ApplicationController
   end
 
   def create
-    name = fuck_params[:text].split()[1].titleize
+      unless fuck_params[:user_name].eql? "fakbot"
+          out = Hash.new
+          out[:text] = ""
+          return
+      end
 
-    fuck = Fuck.find_by_name name
+      name = fuck_params[:text].sub(/^[^ ]* /, '')
 
-    if !fuck.nil?
-      fuck.amount += 1
-    else
-      fuck = Fuck.new name: name, amount: 1
-    end
+      fuck = Fuck.find_by_name name.titleize
 
-    out = Hash.new
-    if fuck.save!
-      out[:text] = "Incremented fucks for #{name}, total #{fuck.amount}"
-    else
-      out[:text] = "Failure"
-    end
+      if !fuck.nil?
+        fuck.amount += 1
+      else
+        fuck = Fuck.new name: name.titleize, amount: 1
+      end
 
-    render json: out
+      out = Hash.new
+      if fuck.save!
+        out[:text] = "Fucked \"#{name}\" #{fuck.amount} times"
+      else
+        out[:text] = "Failure"
+      end
+
+      render json: out
   end
 
   private
