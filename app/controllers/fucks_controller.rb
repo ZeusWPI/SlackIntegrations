@@ -20,7 +20,7 @@ class FucksController < ApplicationController
   end
 
   def create
-      if fuck_params[:user_name].eql? "fakbot"
+      if fuck_params[:user_name].start_with? "fakbot"
           out = Hash.new
           out[:text] = ""
           return
