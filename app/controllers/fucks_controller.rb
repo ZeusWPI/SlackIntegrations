@@ -29,12 +29,12 @@ class FucksController < ApplicationController
 
       name = fuck_params[:text].sub(/^[^ ]* /, '')
 
-      fuck = Fuck.find_by_name name.titleize
+      fuck = Fuck.find_by_name name.downcase
 
       if !fuck.nil?
         fuck.amount += 1
       else
-        fuck = Fuck.new name: name.titleize, amount: 1
+        fuck = Fuck.new name: name.downcase, amount: 1
       end
 
       out = Hash.new
