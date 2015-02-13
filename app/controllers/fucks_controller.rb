@@ -20,6 +20,15 @@ class FucksController < ApplicationController
   end
 
   def create
+      out = Hash.new
+      user_id = fuck_params[:user_id]
+      user_name = fuck_params[:user_name]
+      out[:text] = "fuck user_id: #{user_id}, user_name: #{user_name}"
+      render json: out
+      if true
+          return
+      end
+
       if fuck_params[:user_name].start_with? "fakbot"
           out = Hash.new
           out[:text] = ""
