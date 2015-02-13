@@ -39,7 +39,7 @@ class FucksController < ApplicationController
 
       out = Hash.new
       if fuck.save!
-        out[:text] = "Fucked \"#{name}\" #{fuck.amount} times"
+        out[:text] = "Fucked \"#{name}\" #{pluralize(fuck.amount, 'time')}"
       else
         out[:text] = "Failure"
       end
