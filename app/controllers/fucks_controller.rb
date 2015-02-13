@@ -1,4 +1,6 @@
 class FucksController < ApplicationController
+  include ActionView::Helpers::TextHelper
+
   skip_before_filter :verify_authenticity_token, :only => [:create]
   respond_to :html
 
@@ -39,7 +41,8 @@ class FucksController < ApplicationController
 
       out = Hash.new
       if fuck.save!
-        out[:text] = "Fucked \"#{name}\" #{pluralize(fuck.amount, 'time')}"
+        plural = pluralize(fuck.amount, 'time')
+        out[:text] = "Fucked \"#{name}\" #{plural}"
       else
         out[:text] = "Failure"
       end
