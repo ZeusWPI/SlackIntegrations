@@ -37,11 +37,15 @@ class FucksController < ApplicationController
       end
 
       out = Hash.new
-      if fuck.save!
-        plural = pluralize(fuck.amount, 'time')
-        out[:text] = "Fucked #{name} #{plural}"
+      if fuck_params[:channel_id] == 'C036UF6A2'
+        if fuck.save!
+          plural = pluralize(fuck.amount, 'time')
+          out[:text] = "Fucked #{name} #{plural}"
+        else
+          out[:text] = "Failure"
+        end
       else
-        out[:text] = "Failure"
+        fuck.save
       end
 
       render json: out
