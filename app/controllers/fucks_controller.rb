@@ -13,11 +13,6 @@ class FucksController < ApplicationController
   def show
     name = Fuck.format(fuck_params[:text])
 
-    if true
-      render json: { text: name }
-      return
-    end
-
     fuck = Fuck.find_by_name(name.downcase)
     if fuck.nil?
       render json: { }
