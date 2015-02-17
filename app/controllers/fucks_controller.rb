@@ -27,7 +27,7 @@ class FucksController < ApplicationController
           return
       end
 
-      name = fuck_params[:text].squish
+      name = fuck_params[:text].squish.split(' ', 2)[1]
       fuck = Fuck.find_by_name name.downcase
 
       if fuck.nil?
