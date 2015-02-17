@@ -15,7 +15,7 @@ class FucksController < ApplicationController
 
     fuck = Fuck.find_by_name(name.downcase)
     if fuck.nil?
-      render json: { }
+      render json: { text: "No fuck given" }
     else
       render json: { text: "#{name} has been fucked #{pluralize(fuck.amount, 'time')}" }
     end
