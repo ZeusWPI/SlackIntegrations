@@ -23,20 +23,17 @@ class FucksController < ApplicationController
 
   def create
       if fuck_params[:user_name].start_with? "slackbot"
-          out = Hash.new
-          out[:text] = ""
-          render json: out
+          render json: { text: '' }
           return
       end
 
-      name = fuck_params[:text].sub(/^[^ ]* /, '')
-
+      name = fuck_params[:text].squish
       fuck = Fuck.find_by_name name.downcase
 
-      if !fuck.nil?
-        fuck.amount += 1
-      else
+      if fuck.nil?
         fuck = Fuck.new name: name.downcase, amount: 1
+      else
+        fuck.amount += 1
       end
 
       out = Hash.new
