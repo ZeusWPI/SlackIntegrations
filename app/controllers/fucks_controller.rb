@@ -11,13 +11,13 @@ class FucksController < ApplicationController
   end
 
   def show
-    name = params[:text]
+    name = fuck_params[:name]
 
-    @fuck = Fuck.find_by(name: name)
-    if !@fuck.nil?
-      call_webhook(params, @fuck)
-      render plain: "Komt eraan!"
-      return
+    fuck = Fuck.find_by_name(name.downcase)
+    if fuck.nil?
+      render json: { }
+    else
+      render json: { text: "#{name} has been fucked #{pluralize(fuck.amount, 'time')}" }
     end
   end
 
