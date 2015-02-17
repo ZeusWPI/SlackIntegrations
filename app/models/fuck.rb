@@ -11,4 +11,9 @@
 
 class Fuck < ActiveRecord::Base
   validates :name, presence: true
+
+  def self.format(name)
+    return name unless name
+    name.squish.split(' ', 2)[1]
+  end
 end

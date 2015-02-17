@@ -11,7 +11,7 @@ class FucksController < ApplicationController
   end
 
   def show
-    name = fuck_params[:name]
+    name = Fuck.format(fuck_params[:text])
 
     fuck = Fuck.find_by_name(name.downcase)
     if fuck.nil?
@@ -27,7 +27,7 @@ class FucksController < ApplicationController
           return
       end
 
-      name = fuck_params[:text].squish.split(' ', 2)[1]
+      name = Fuck.format(fuck_params[:text])
       fuck = Fuck.find_by_name name.downcase
 
       if fuck.nil?
