@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get  '/showquote' => 'quotes#show'
   post '/quotes'    => 'quotes#create'
 
-  get  '/showfuck' => 'fucks#show'
+  post  '/showfuck' => 'fucks#show'
   get '/fucks'     => 'fucks#index'
   post '/fucks'     => 'fucks#create'
 
