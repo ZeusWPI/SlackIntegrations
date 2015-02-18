@@ -8,16 +8,15 @@ class RestoController < ApplicationController
   }
 
   def resto
-    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))[Time.now.strftime("%Y-%m-%d")]
+    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))
 
-    puts params[:text]
     if DAYS.has_key? params[:text]
       day = Time.now + DAYS[params[:text]]
     else
       day = Time.now
     end
 
-    menu = weekmenu[day]
+    menu = weekmenu[day.strftime("%Y-%m-%d")]
 
     if menu && menu['open']
       meals = menu['meat'].map{ |row| row['name'] }
