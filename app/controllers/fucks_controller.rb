@@ -51,6 +51,19 @@ class FucksController < ApplicationController
       render json: out
   end
 
+  def personalfucks
+    out = {}
+    fucks = Fucker.where(user_id: fuck_params[:user_id]).select('fuckers.*, count(fuck_id) as count').group(:fuck_id).limit(5).includes(:fuck).map{ |f| f.fuck.name }.join(', ')
+
+    if fucks.empty?
+      out[:text] = "#{fuck_params[:user_name]} gives no fuck."
+    else
+      out[:text] = "#{fuck_params[:user_name]} personal fucks: #{fucks}"
+    end
+
+    render json: out
+  end
+
   private
     def fuck_params
       if params.has_key? :fuck
