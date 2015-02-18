@@ -10,6 +10,8 @@
 #
 
 class Fuck < ActiveRecord::Base
+  has_many :fuckers
+
   validates :name, presence: true
 
   def self.format(name)
