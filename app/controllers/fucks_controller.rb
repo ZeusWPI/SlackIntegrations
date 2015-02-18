@@ -1,6 +1,9 @@
 class FucksController < ApplicationController
   include ActionView::Helpers::TextHelper
 
+  SLACKBOT = 'slackbot'
+  FAKBOTKANAAL = 'C036UF6A2'
+
   skip_before_filter :verify_authenticity_token, :only => [:create]
   respond_to :html
 
@@ -22,30 +25,27 @@ class FucksController < ApplicationController
   end
 
   def create
-      if fuck_params[:user_name].start_with? "slackbot"
-          render json: { text: '' }
+      if fuck_params[:user_name].start_with? SLACKBOT
+          render json: { }
           return
       end
 
       name = Fuck.format(fuck_params[:text])
       fuck = Fuck.find_by_name name.downcase
+      fuck ||= Fuck.new name: name.downcase
 
-      if fuck.nil?
-        fuck = Fuck.new name: name.downcase, amount: 1
-      else
-        fuck.amount += 1
-      end
+      fucker = fuck.fuckers.build(user_id: fuck_params[:user_id])
 
       out = Hash.new
-      if fuck_params[:channel_id] == 'C036UF6A2'
-        if fuck.save!
-          plural = pluralize(fuck.amount, 'time')
+      if fuck_params[:channel_id] == FAKBOTKANAAL
+        if fucker.save!
+          plural = pluralize(fuck.reload.amount, 'time')
           out[:text] = "Fucked #{name} #{plural}"
         else
           out[:text] = "Failure"
         end
       else
-        fuck.save
+        fucker.save
       end
 
       render json: out
