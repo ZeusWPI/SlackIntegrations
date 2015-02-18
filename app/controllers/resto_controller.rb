@@ -2,20 +2,31 @@ class RestoController < ApplicationController
   require 'json'
   require 'open-uri'
 
-  def resto
-    menu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))[Time.now.strftime("%Y-%m-%d")]
-    menu.symbolize_keys!
+  DAYS = {
+    'morgen'     => 1.day,
+    'overmorgen' => 2.days
+  }
 
-    out = {}
-    if menu[:open]
-      meals = menu[:meat].map{ |row| row["name"] }
-      meals << menu[:soup]["name"]
-      meals << menu[:vegetables]
-      out[:text] = meals.join(', ')
+  def resto
+    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))[Time.now.strftime("%Y-%m-%d")]
+
+    if DAYS.has_key? params[:text]
+      day = Time.now + DAYS[params[:text]]
     else
-      out[:text] = "Resto is not open today"
+      day = Time.now
     end
 
-    render plain: out[:text]
+    menu = weekmenu[day]
+
+    if menu && menu['open']
+      meals = menu['meat'].map{ |row| row['name'] }
+      meals << menu['soup']['name']
+      meals << menu['vegetables']
+      text = meals.join(', ')
+    else
+      text = "Resto is not open today"
+    end
+
+    render plain: text
   end
 end
