@@ -53,7 +53,7 @@ class FucksController < ApplicationController
 
   def personalfucks
     out = {}
-    fucks = Fucker.where(user_id: fuck_params[:user_id]).select('fuckers.*, count(fuck_id) as count').group(:fuck_id).limit(5).includes(:fuck).map{ |f| f.fuck.name }.join(', ')
+    fucks = Fucker.where(user_id: fuck_params[:user_id]).select('fuckers.*, count(fuck_id) as count').group(:fuck_id).limit(5).order('count').reverse_order.includes(:fuck).map{ |f| f.fuck.name }.join(', ')
 
     if fucks.empty?
       out[:text] = "#{fuck_params[:user_name]} gives no fuck."
