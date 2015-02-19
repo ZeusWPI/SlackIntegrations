@@ -1,12 +1,12 @@
-set :application, 'zeusquotes'
-set :repo_url, 'git@github.com:ZeusWPI/ZeusQuotes.git'
+set :application, 'slackintegrations'
+set :repo_url, 'git@github.com:ZeusWPI/SlackIntegrations.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Default deploy_to directory is /var/www/my_app
 set :branch, 'master'
-set :deploy_to, '/home/zeusquotes/production'
+set :deploy_to, '/home/slackintegrations/production'
 
 # Default value for :linked_files is []
 set :linked_files, %w{config/database.yml config/secrets.yml}

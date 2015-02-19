@@ -1,4 +1,4 @@
-server 'zeus.ugent.be', user: 'zeusquotes', roles: %w{web app db},
+server 'zeus.ugent.be', user: 'slackintegrations', roles: %w{web app db},
   ssh_options: {
   forward_agent: true,
   auth_methods: ['publickey'],
