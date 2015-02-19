@@ -26,20 +26,20 @@ class RestoController < ApplicationController
     end
 
     if menu['open']
-      text = '```'
-      text << '*Soep*'
-      text << '\r'
-      text << maaltijd(menu['soup'])
-      text << '\r'
+      text = "```"
+      text << "*Soep*"
+      text << "\r"
+      text << maaltijd(menu["soup"])
+      text << "\r"
 
-      text << '*Hoofdgerecht*'
-      text << '\r'
-      text << maaltijden(menu['meat'])
-      text << '\r'
-      text << '*Groenten*'
-      text << '\r'
-      text << maaltijden(menu['vegetables'])
-      text << '```'
+      text << "*Hoofdgerecht*"
+      text << "\r"
+      text << maaltijden(menu["meat"])
+      text << "\r"
+      text << "*Groenten*"
+      text << "\r"
+      text << maaltijden(menu["vegetables"])
+      text << "```"
     else
       text = "Resto is #{DAYS.has_key?(params[:text]) ? params[:text] : "vandaag" } niet open."
     end
