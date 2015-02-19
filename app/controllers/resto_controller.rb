@@ -38,7 +38,7 @@ class RestoController < ApplicationController
       text << "\r"
       text << "*Groenten*"
       text << "\r"
-      text << maaltijden(menu["vegetables"])
+      text << menu["vegetables"].join("\r")
       text << "```"
     else
       text = "Resto is #{DAYS.has_key?(params[:text]) ? params[:text] : "vandaag" } niet open."
