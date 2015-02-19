@@ -29,7 +29,7 @@ class RestoController < ApplicationController
       text = ''
       text << params[:text] << "\r" if DAYS.has_key? params[:text]
       text << "*Soep*"
-      text << "\r\n"
+      text << "\n"
       text << maaltijd(menu["soup"])
       text << "\r"
 
