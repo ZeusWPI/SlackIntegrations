@@ -26,14 +26,12 @@ class RestoController < ApplicationController
     end
 
     if menu['open']
-      text <<EOF
-*Soep*
-#{maaltijd(menu['soup'])}
-*Hoofdgerecht*
-#{maaltijden(menu['meat'])}
-*Groenten*
-#{maaltijden(menu['vegetables'])}
-EOF
+      text = "```*Soep*"\
+        "#{maaltijd(menu['soup'])}"\
+        "*Hoofdgerecht*"\
+        "#{maaltijden(menu['meat'])}"\
+        "*Groenten*"\
+        "#{maaltijden(menu['vegetables'])}```"
     else
       text = "Resto is #{DAYS.has_key?(params[:text]) ? params[:text] : "vandaag" } niet open."
     end
