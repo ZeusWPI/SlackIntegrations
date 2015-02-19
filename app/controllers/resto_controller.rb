@@ -27,7 +27,7 @@ class RestoController < ApplicationController
 
     if menu['open']
       text = ""
-      text << (Time.now + DAYS[params[:text]]).strftime("%d-%m") << "\n" if DAYS.has_key? params[:text]
+      text << (Time.now + (DAYS[params[:text]] || 0)).strftime("%d-%m") << "\n" if DAYS.has_key? params[:text]
       text << "*Soep*"
       text << "\n"
       text << maaltijd(menu["soup"])
