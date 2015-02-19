@@ -1,6 +1,8 @@
+require 'json'
+require 'open-uri'
+
 class RestoController < ApplicationController
-  require 'json'
-  require 'open-uri'
+  skip_before_filter :verify_authenticity_token
 
   DAYS = {
     'morgen'     => 1.day,
@@ -10,23 +12,46 @@ class RestoController < ApplicationController
   def resto
     weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))
 
-    if DAYS.has_key? params[:text]
-      day = Time.now + DAYS[params[:text]]
-    else
-      day = Time.now
+    day = Time.now + (DAYS[params[:text]] || 0)
+    if [0,6].include? day.strftime("%w").to_i
+      render plain: "Resto is niet open in het weekend."
+      return
     end
 
     menu = weekmenu[day.strftime("%Y-%m-%d")]
 
-    if menu && menu['open']
-      meals = menu['meat'].map{ |row| row['name'] }
-      meals << menu['soup']['name']
-      meals << menu['vegetables']
-      text = meals.join(', ')
+    unless menu
+      render plain: "Menu is niet beschikbaar voor deze dag."
+      return
+    end
+
+    if menu['open']
+      text = '*Soep*'
+      text << '\n'
+      text << maaltijd(menu['soup'])
+      text << '\n'
+
+      text << '*Hoofdgerecht*'
+      text << '\n'
+      text << maaltijden(menu['meat'])
+      text << '\n'
+      text << '*Groenten*'
+      text << '\n'
+      text << maaltijden(menu['vegetables'])
     else
-      text = "Resto is not open today"
+      text = "Resto is #{DAYS.has_key?(params[:text]) ? params[:text] : "vandaag" } niet open."
     end
 
     render plain: text
   end
+
+  private
+
+    def maaltijden(hash)
+      hash.map{ |row| maaltijd(row) }.join('\n')
+    end
+
+    def maaltijd(hash)
+      "#{hash['name']} - #{hash['price']}"
+    end
 end
