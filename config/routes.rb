@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-
-  # Quotes
-  get  '/showquote'     => 'quotes#show'
-  post '/quotes'        => 'quotes#create'
-  post '/'              => 'quotes#create', as: :add_quote
   root 'quotes#index'
 
   # Fucks
@@ -12,8 +7,16 @@ Rails.application.routes.draw do
   get '/fucks'          => 'fucks#index'
   post '/fucks'         => 'fucks#create'
 
+  # Quotes
+  get  '/showquote'     => 'quotes#show'
+  post '/quotes'        => 'quotes#create'
+  post '/'              => 'quotes#create', as: :add_quote
+
   # Resto
   post '/resto'         => 'resto#resto'
+
+  # Shorten
+  post '/shorten'       => 'shorten#shorten'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
