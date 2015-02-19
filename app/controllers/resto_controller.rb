@@ -27,7 +27,7 @@ class RestoController < ApplicationController
 
     if menu['open']
       text = "```*Soep*"\
-        "#{maaltijd(menu['soup'])}"\
+        "#{maaltijd(menu['soup'])}\r"\
         "*Hoofdgerecht*"\
         "#{maaltijden(menu['meat'])}"\
         "*Groenten*"\
