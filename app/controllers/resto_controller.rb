@@ -50,7 +50,7 @@ class RestoController < ApplicationController
   private
 
     def maaltijden(hash)
-      hash.map{ |row| maaltijd(row) }.join('\r')
+      hash.map{ |row| maaltijd(row) }.join("\r")
     end
 
     def maaltijd(hash)
