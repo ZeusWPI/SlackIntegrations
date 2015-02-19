@@ -1,4 +1,9 @@
 class FucksController < ApplicationController
+  include ActionView::Helpers::TextHelper
+
+  SLACKBOT = 'slackbot'
+  FAKBOTKANAAL = 'C036UF6A2'
+
   skip_before_filter :verify_authenticity_token, :only => [:create]
   respond_to :html
 
@@ -9,32 +14,51 @@ class FucksController < ApplicationController
   end
 
   def show
-    name = params[:text]
+    name = Fuck.format(fuck_params[:text])
 
-    @fuck = Fuck.find_by(name: name)
-    if !@fuck.nil?
-      call_webhook(params, @fuck)
-      render plain: "Komt eraan!"
-      return
+    fuck = Fuck.find_by_name(name.downcase)
+    if fuck.nil?
+      render json: { text: "No fuck given" }
+    else
+      render json: { text: "#{name} has been fucked #{pluralize(fuck.amount, 'time')}" }
     end
   end
 
   def create
-    name = fuck_params[:text].split()[1].titleize
+      if fuck_params[:user_name].start_with? SLACKBOT
+          render json: { }
+          return
+      end
 
-    fuck = Fuck.find_by_name name
+      name = Fuck.format(fuck_params[:text])
+      fuck = Fuck.find_by_name name.downcase
+      fuck ||= Fuck.new name: name.downcase
 
-    if !fuck.nil?
-      fuck.amount += 1
+      fucker = fuck.fuckers.build(user_id: fuck_params[:user_id])
+
+      out = Hash.new
+      if fuck_params[:channel_id] == FAKBOTKANAAL
+        if fucker.save!
+          plural = pluralize(fuck.reload.amount, 'time')
+          out[:text] = "Fucked #{name} #{plural}"
+        else
+          out[:text] = "Failure"
+        end
+      else
+        fucker.save
+      end
+
+      render json: out
+  end
+
+  def personalfucks
+    out = {}
+    fucks = Fucker.where(user_id: fuck_params[:user_id]).select('fuckers.*, count(fuck_id) as count').group(:fuck_id).limit(5).order('count').reverse_order.includes(:fuck).map{ |f| f.fuck.name }.join(', ')
+
+    if fucks.empty?
+      out[:text] = "#{fuck_params[:user_name]} gives no fuck."
     else
-      fuck = Fuck.new name: name, amount: 1
-    end
-
-    out = Hash.new
-    if fuck.save!
-      out[:text] = "Incremented fucks for #{name}, total #{fuck.amount}"
-    else
-      out[:text] = "Failure"
+      out[:text] = "#{fuck_params[:user_name]} personal fucks: #{fucks}"
     end
 
     render json: out
