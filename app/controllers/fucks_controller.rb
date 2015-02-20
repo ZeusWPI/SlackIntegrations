@@ -45,7 +45,9 @@ class FucksController < ApplicationController
           out[:text] = "Failure"
         end
       else
-        fucker.save
+        if fucker.save
+          Webhook.new(channel: "#fakbotkanaal", username: "fakbot").ping("#{fuck_params[:user_name]} in #{fuck_params[:channel_name]}: #{fuck_params[:text]}")
+        end
       end
 
       render json: out
