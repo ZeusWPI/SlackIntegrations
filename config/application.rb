@@ -6,9 +6,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module ZeusQuotes
-  QUOTES_TEAM    = 'zeuswpi'
-  QUOTES_TOKEN   = 'nSkfHbEoMbSExxM0qZB3MpTa'
+module SlackIntegrations
+  ZEUS_TEAM    = 'zeuswpi'
+  ZEUS_TOKEN   = 'nSkfHbEoMbSExxM0qZB3MpTa'
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
