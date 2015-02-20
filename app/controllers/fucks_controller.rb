@@ -46,7 +46,7 @@ class FucksController < ApplicationController
         end
       else
         if fucker.save
-          Webhook.new(channel: "#fakbotkanaal", username: "fakbot").ping("@#{fuck_params[:user_name]} in ##{fuck_params[:channel_name]}: #{fuck_params[:text]}")
+          Webhook.new(channel: "#fakbotkanaal", username: "fakbot").ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
         end
       end
 
