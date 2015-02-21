@@ -48,9 +48,9 @@ class QuotesController < ApplicationController
       options = { channel:    channel_name,
                   username:   name
                 }
-      poster = Tarumi::Bot.new(ZeusQuotes::QUOTES_TEAM,
-                               ZeusQuotes::QUOTES_TOKEN,
-                               options)
+      Tarumi::Bot.new(ZeusQuotes::ZEUS_TEAM,
+                      ZeusQuotes::ZEUS_TOKEN,
+                      options)
     end
     def call_add_quote_webhook(params, quote)
       poster(params, true).ping("“#{quote.text}”")

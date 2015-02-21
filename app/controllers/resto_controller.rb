@@ -10,13 +10,13 @@ class RestoController < ApplicationController
   }
 
   def resto
-    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{Time.now.strftime("%U").to_i + 1}.json"))
-
     day = Time.now + (DAYS[params[:text]] || 0)
     if [0,6].include? day.strftime("%w").to_i
       render plain: "Resto is niet open in het weekend."
       return
     end
+
+    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{day.strftime("%U").to_i + 1}.json"))
 
     menu = weekmenu[day.strftime("%Y-%m-%d")]
 
