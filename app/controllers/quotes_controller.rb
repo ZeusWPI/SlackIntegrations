@@ -48,8 +48,8 @@ class QuotesController < ApplicationController
       options = { channel:    channel_name,
                   username:   name
                 }
-      Tarumi::Bot.new(ZeusQuotes::ZEUS_TEAM,
-                      ZeusQuotes::ZEUS_TOKEN,
+      Tarumi::Bot.new(SlackIntegrations::ZEUS_TEAM,
+                      SlackIntegrations::ZEUS_TOKEN,
                       options)
     end
     def call_add_quote_webhook(params, quote)
