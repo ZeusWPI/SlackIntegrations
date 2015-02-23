@@ -46,11 +46,11 @@ class FucksController < ApplicationController
         end
       else
         if fucker.save
-          Rails.logger.debug("debug::" + webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}").to_s)
+          hash = webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
         end
       end
 
-      render json: out
+      render json: { text: hash.to_s }
   end
 
   def personalfucks
