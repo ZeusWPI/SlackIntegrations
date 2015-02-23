@@ -79,6 +79,6 @@ class FucksController < ApplicationController
 
     def webhook
       Webhook.new(channel: "#fakbotkanaal", username: "fakbot",
-                  icon_emoji: "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2015-02-17/3746989870_08edb39c02fe4b2b2699_48.jpg")
+                  icon_url: "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2015-02-17/3746989870_08edb39c02fe4b2b2699_48.jpg")
     end
 end
