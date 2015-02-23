@@ -47,10 +47,11 @@ class FucksController < ApplicationController
       else
         if fucker.save
           hash = webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
+          webhook.ping(hash.to_s)
         end
       end
 
-      render json: { text: hash.to_s }
+      render json: out
   end
 
   def personalfucks
