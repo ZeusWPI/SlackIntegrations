@@ -38,7 +38,7 @@ gem 'spring',        group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem "tarumi"
+gem "tarumi", git: "https://github.com/becousae/tarumi"
 
 # Deployment
 group :deployment do

@@ -46,7 +46,7 @@ class FucksController < ApplicationController
         end
       else
         if fucker.save
-          Webhook.new(channel: "#fakbotkanaal", username: "fakbot").ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
+          webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
         end
       end
 
@@ -68,22 +68,17 @@ class FucksController < ApplicationController
 
   private
     def fuck_params
-      if params.has_key? :fuck
-        params.require(:fuck).permit(:token,
-                                      :team_id,
-                                      :channel_id,
-                                      :channel_name,
-                                      :user_id,
-                                      :user_name,
-                                      :text)
-      else
-        params.permit(:token,
-                      :team_id,
-                      :channel_id,
-                      :channel_name,
-                      :user_id,
-                      :user_name,
-                      :text)
-      end
+      params.permit(:token,
+                    :team_id,
+                    :channel_id,
+                    :channel_name,
+                    :user_id,
+                    :user_name,
+                    :text)
+    end
+
+    def webhook
+      Webhook.new(channel: "#fakbotkanaal", username: "fakbot",
+                  icon_emoji: "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2015-02-17/3746989870_08edb39c02fe4b2b2699_48.jpg")
     end
 end
