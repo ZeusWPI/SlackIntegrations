@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/becousae/tarumi
-  revision: 8adff0f62193a3fad5b3b7ca70c364650c816249
+  revision: 582c2fda24c342f7990f419e130396aef995a15f
   specs:
     tarumi (0.0.1)
       activesupport
