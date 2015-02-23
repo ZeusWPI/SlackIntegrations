@@ -45,13 +45,10 @@ class QuotesController < ApplicationController
       name = if not is_add then "#{params[:user_name]} quoted: " else "@#{params[:user_name]} added the quote " end
       is_dm = params[:channel_name] == 'directmessage'
       channel_name = is_dm ? "@#{params[:user_name]}" : "##{params[:channel_name]}"
-      options = { channel:    channel_name,
-                  username:   name
-                }
-      Tarumi::Bot.new(SlackIntegrations::ZEUS_TEAM,
-                      SlackIntegrations::ZEUS_TOKEN,
-                      options)
+
+      Webhook.new(channel: channel_name, username: name)
     end
+
     def call_add_quote_webhook(params, quote)
       poster(params, true).ping("“#{quote.text}”")
     end
