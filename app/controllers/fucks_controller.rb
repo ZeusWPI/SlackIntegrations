@@ -46,7 +46,7 @@ class FucksController < ApplicationController
         end
       else
         if fucker.save
-          Rails.logger.debug("debug::" + webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}"))
+          Rails.logger.debug("debug::" + webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}").to_s)
         end
       end
 
