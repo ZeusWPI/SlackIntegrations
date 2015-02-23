@@ -6,8 +6,10 @@ class Webhook
 
   def initialize(attributes = {})
     options = {
-      channel: (attributes[:channel] || DEFAULT_CHANNEL),
-      username: (attributes[:username] || DEFAULT_USERNAME),
+      channel:    (attributes[:channel] || DEFAULT_CHANNEL),
+      username:   (attributes[:username] || DEFAULT_USERNAME),
+      icon_url:   attributes[:icon_url],
+      icon_emoji: attributes[:icon_emoji]
     }
 
     self.hook = Tarumi::Bot.new(
