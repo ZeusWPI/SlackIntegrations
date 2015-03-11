@@ -17,8 +17,7 @@ class CammieController < ApplicationController
       file << open('https://kelder.zeus.ugent.be/webcam/image/jpeg.cgi', {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
     end
 
-    webhook.ping("#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}")
-    render plain: ''
+    render plain: "#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}"
   end
 
   private
@@ -28,7 +27,7 @@ class CammieController < ApplicationController
     end
 
     def webhook
-      channel_name = cammie_params[:channel_name] == "directmessage" ? "#general" : "##{cammie_params[:channel_name]}"
+      channel_name = cammie_params[:channel_name] == "directmessage" ? "@#{cammie_params[:user_name]}" : "##{cammie_params[:channel_name]}"
       Webhook.new(channel: channel_name, username: "cammie",
                   icon_emoji: ":ghost:")
     end
