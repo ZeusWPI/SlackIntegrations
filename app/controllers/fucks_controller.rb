@@ -26,13 +26,12 @@ class FucksController < ApplicationController
 
   def create
       if fuck_params[:user_name].start_with? SLACKBOT
-          render json: { }
+          render json: {}
           return
       end
 
       name = Fuck.format(fuck_params[:text])
-      fuck = Fuck.find_by_name name.downcase
-      fuck ||= Fuck.new name: name.downcase
+      fuck = Fuck.find_by_name(name.downcase) || Fuck.new(name: name.downcase)
 
       fucker = fuck.fuckers.build(user_id: fuck_params[:user_id])
 
