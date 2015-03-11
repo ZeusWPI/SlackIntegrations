@@ -4,6 +4,8 @@ class CammieController < ApplicationController
 
   CAMMIEDIRECTORY = %w[cammie]
 
+  skip_before_filter :verify_authenticity_token, :only => [:shoot]
+
   def shoot
     time = Time.now.strftime('%Y%m%d%H%M%S')
     filename = "host-#{time}.jpeg"
