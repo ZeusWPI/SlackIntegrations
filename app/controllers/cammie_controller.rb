@@ -2,7 +2,7 @@ class CammieController < ApplicationController
   require 'open-uri'
   require 'fileutils'
 
-  CAMMIEDIRECTORY = %w[cammie]
+  CAMMIEDIRECTORY = %w[system cammie]
 
   skip_before_filter :verify_authenticity_token, :only => [:shoot]
 
