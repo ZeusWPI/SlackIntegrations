@@ -29,7 +29,7 @@ class CammieController < ApplicationController
 
     def webhook
       channel_name = cammie_params[:channel_name] == "directmessage" ? "#general" : "##{cammie_params[:channel_name]}"
-      Webhook.new(channel: channel_name, username: "testbot",
+      Webhook.new(channel: channel_name, username: "cammie",
                   icon_emoji: ":ghost:")
     end
 
