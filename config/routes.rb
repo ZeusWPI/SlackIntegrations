@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'quotes#index'
 
   # Cammie
-  get '/shoot'         => 'cammie#shoot'
+  post '/shoot'         => 'cammie#shoot'
 
   # Fucks
   post '/showfuck'      => 'fucks#show'
