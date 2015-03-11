@@ -7,8 +7,10 @@ class CammieController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:shoot]
 
   def shoot
+    cammiedir
+
     time = Time.now.strftime('%Y%m%d%H%M%S')
-    filename = "host-#{time}.jpeg"
+    filename = "shot-#{time}.jpeg"
     filepath = [CAMMIEDIRECTORY, filename].join('/')
 
     open(['public', filepath].join('/'), 'wb') do |file|
@@ -22,7 +24,7 @@ class CammieController < ApplicationController
   private
 
     def cammiedir
-      FileUtils::mkdir_p CAMMIEDIRECTORY
+      FileUtils::mkdir_p ['public', CAMMIEDIRECTORY].join('/')
     end
 
     def webhook
