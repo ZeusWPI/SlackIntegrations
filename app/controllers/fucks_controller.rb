@@ -67,13 +67,23 @@ class FucksController < ApplicationController
 
   private
     def fuck_params
-      params.permit(:token,
-                    :team_id,
-                    :channel_id,
-                    :channel_name,
-                    :user_id,
-                    :user_name,
-                    :text)
+      if params[:fuck]
+        params.require(:fuck).permit(:token,
+                      :team_id,
+                      :channel_id,
+                      :channel_name,
+                      :user_id,
+                      :user_name,
+                      :text)
+      else
+        params.permit(:token,
+                      :team_id,
+                      :channel_id,
+                      :channel_name,
+                      :user_id,
+                      :user_name,
+                      :text)
+      end
     end
 
     def webhook
