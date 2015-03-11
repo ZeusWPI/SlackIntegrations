@@ -18,7 +18,6 @@ class CammieController < ApplicationController
     end
 
     webhook.ping("#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}")
-    render plain: cammie_params[:channel_name]
   end
 
   private
