@@ -17,7 +17,7 @@ class CammieController < ApplicationController
       file << open('https://kelder.zeus.ugent.be/webcam/image/jpeg.cgi', {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
     end
 
-    render plain: "#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}"
+    render plain: "<#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}>"
   end
 
   private
