@@ -14,7 +14,7 @@ class CammieController < ApplicationController
     filepath = [CAMMIEDIRECTORY, filename].join('/')
 
     open(['public', filepath].join('/'), 'wb') do |file|
-      file << open('https://kelder.zeus.ugent.be/webcam/image/jpeg.cgi', {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+      file << open('https://kelder.zeus.ugent.be/webcam/image/jpeg.cgi').read
     end
 
     render plain: "<#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}>"
