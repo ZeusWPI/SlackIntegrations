@@ -48,3 +48,4 @@ group :deployment do
   gem 'capistrano-rvm'
 end
 
+gem 'rmagick'
