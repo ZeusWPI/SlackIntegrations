@@ -1,29 +1,63 @@
 class CammieController < ApplicationController
   require 'open-uri'
   require 'fileutils'
+  require 'net/http'
+  include CammieHelper
 
-  CAMMIEDIRECTORY = %w[system cammie]
+  skip_before_filter :verify_authenticity_token, :only => [:shoot, :doorshot]
 
-  skip_before_filter :verify_authenticity_token, :only => [:shoot]
+  CAMMIEDIRECTORY = %w[system cammie screenshots]
 
   def shoot
     cammiedir
 
     time = Time.now.strftime('%Y%m%d%H%M%S')
     filename = "shot-#{time}.jpeg"
-    filepath = [CAMMIEDIRECTORY, filename].join('/')
 
-    open(['public', filepath].join('/'), 'wb') do |file|
-      file << open('https://kelder.zeus.ugent.be/webcam/image/jpeg.cgi').read
-    end
+    filepath = [CAMMIEDIRECTORY, filename].join('/')
+    snapshot ['public', filepath].join('/')
 
     render plain: "<#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}>"
+  end
+
+  def doorshot
+    move_cammie_to "door"
+
+    time = Time.now.strftime('%Y%m%d%H%M%S')
+    directory = ['public', 'system', 'cammie', 'door', time].join('/')
+    make_dir directory
+
+    10.times do
+      time_shot directory
+      sleep 1
+    end
+
+    10.times do
+      time_shot directory
+      sleep 5
+    end
+
+    render plain: "finished"
   end
 
   private
 
     def cammiedir
-      FileUtils::mkdir_p ['public', CAMMIEDIRECTORY].join('/')
+       make_dir ['public', CAMMIEDIRECTORY].join('/')
+    end
+
+    def make_dir(directory)
+      FileUtils::mkdir_p directory
+    end
+
+    def time_shot(directory)
+      time = Time.now.strftime('%Y%m%d%H%M%S')
+      snapshot [directory, time + '.jpeg'].join('/')
+    end
+
+    def move_cammie_to(preset_index)
+      uri = URI("http://kelder.zeus.ugent.be/webcam/cgi/ptdc.cgi")
+      Net::HTTP.post_form(uri, 'command' => 'goto_preset_position', 'index' => preset_index)
     end
 
     def webhook
