@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # Cammie
   post '/shoot'         => 'cammie#shoot'
+  post '/doorshot'      => 'cammie#doorshot'
 
   # Fucks
   post '/showfuck'      => 'fucks#show'
