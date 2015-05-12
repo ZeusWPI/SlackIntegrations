@@ -41,7 +41,7 @@ class CammieController < ApplicationController
     animation.delay = 20
     animation.write([directory_with_system, "animated.gif"].join('/'))
 
-    render plain: [directory_without_system, "animated.gif"].join('/')
+    render plain: "#{request.protocol}#{request.host_with_port}/slackintegrations/#{[directory_without_system, "animated.gif"].join('/')}"
   end
 
   private
