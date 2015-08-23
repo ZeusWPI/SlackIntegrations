@@ -28,6 +28,7 @@ class CammieController < ApplicationController
     time = Time.now.strftime('%Y%m%d%H%M%S')
     directory_without_system = ['system', 'cammie', 'door', time].join('/')
     directory_with_system = ['public', directory_without_system].join('/')
+    gif_location = [directory_with_system, "animated.gif"].join('/')
     make_dir directory_with_system
 
     pictures = []
@@ -42,12 +43,12 @@ class CammieController < ApplicationController
     end
 
     animation.delay = 20
-    animation.write([directory_with_system, "animated.gif"].join('/')){
+    animation.write(gif_location){
           self.compression = Magick::LZWCompression
           self.dither = false
       }
 
-    render plain: root_url + [directory_without_system, "animated.gif"].join('/')
+    render plain: root_url + gif_location
   end
 
   private
