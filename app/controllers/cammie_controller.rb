@@ -43,12 +43,12 @@ class CammieController < ApplicationController
     end
 
     animation.delay = 20
-    animation.write(gif_location){
+    animation.write(['public', gif_location].join('/')){
           self.compression = Magick::LZWCompression
           self.dither = false
       }
 
-    render plain: root_url + ['public', gif_location].join('/')
+    render plain: root_url + gif_location
   end
 
   private
