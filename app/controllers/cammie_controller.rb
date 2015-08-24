@@ -19,7 +19,7 @@ class CammieController < ApplicationController
     filepath = [CAMMIEDIRECTORY, filename].join('/')
     snapshot ['public', filepath].join('/')
 
-    render plain: "<#{request.protocol}#{request.host_with_port}/slackintegrations/#{filepath}>"
+    render plain: root_url + filepath
   end
 
   def doorshot
@@ -28,20 +28,27 @@ class CammieController < ApplicationController
     time = Time.now.strftime('%Y%m%d%H%M%S')
     directory_without_system = ['system', 'cammie', 'door', time].join('/')
     directory_with_system = ['public', directory_without_system].join('/')
+    gif_location = [directory_without_system, "animated.gif"].join('/')
     make_dir directory_with_system
 
     pictures = []
     time_shot directory_with_system, 10, 1, pictures
-    time_shot directory_with_system, 10, 5, pictures
+    time_shot directory_with_system, 4, 5, pictures
 
     animation = ImageList.new
     pictures.each do |p|
-      animation.push Image.read(p).first
+      img = Image.read(p).first
+      animation.push img.scale(0.50).despeckle
+      FileUtils.rm(p)
     end
-    animation.delay = 20
-    animation.write([directory_with_system, "animated.gif"].join('/'))
 
-    render plain: "#{request.protocol}#{request.host_with_port}/slackintegrations/#{[directory_without_system, "animated.gif"].join('/')}"
+    animation.delay = 20
+    animation.write(['public', gif_location].join('/')){
+          self.compression = Magick::LZWCompression
+          self.dither = false
+      }
+
+    render plain: root_url + gif_location
   end
 
   private
