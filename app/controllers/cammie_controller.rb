@@ -28,7 +28,7 @@ class CammieController < ApplicationController
     time = Time.now.strftime('%Y%m%d%H%M%S')
     directory_without_system = ['system', 'cammie', 'door', time].join('/')
     directory_with_system = ['public', directory_without_system].join('/')
-    gif_location = [directory_with_system, "animated.gif"].join('/')
+    gif_location = [directory_without_system, "animated.gif"].join('/')
     make_dir directory_with_system
 
     pictures = []
@@ -48,7 +48,7 @@ class CammieController < ApplicationController
           self.dither = false
       }
 
-    render plain: root_url + gif_location
+    render plain: root_url + ['public', gif_location].join('/')
   end
 
   private
