@@ -1,4 +1,4 @@
-# [SlackIntegrations](http://zeus.ugent.be/slackintegrations) [![Code Climate](https://codeclimate.com/github/ZeusWPI/SlackIntegrations/badges/gpa.svg)](https://codeclimate.com/github/ZeusWPI/SlackIntegrations)
+# [SlackIntegrations](http://zeus.ugent.be/slackintegrations)
 
 ### Fucks
 Ieder bericht op slack dat begint met `fuck`, `fak` of `fack` wordt opgeslagen, om de rage-statistieken van onze leden bij te houden.
