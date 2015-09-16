@@ -45,6 +45,7 @@ class FucksController < ApplicationController
         end
       else
         if fucker.save
+          Fuck.find_by_name "<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}"
           webhook.ping("<@#{fuck_params[:user_name]}> in <##{fuck_params[:channel_name]}>: #{fuck_params[:text]}")
         end
       end
