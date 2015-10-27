@@ -14,7 +14,7 @@ class Webhook
 
     self.hook = Tarumi::Bot.new(
       SlackIntegrations::ZEUS_TEAM,
-      Rails.application.secret.zeus_token,
+      Rails.application.secrets.zeus_token,
       options
     )
   end
