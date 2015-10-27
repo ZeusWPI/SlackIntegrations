@@ -10,7 +10,7 @@ class ShortenController < ApplicationController
 
     url = "http://api.bit.ly/v3/shorten?" +
       "login=benjizeus" +
-      "&apiKey=R_3e5099d410d44e9aa12e6c6b3b7cb896" +
+      "&apiKey=#{Rails.application.secrets.bitly}" +
       "&longUrl=#{ERB::Util.url_encode(prefix(params[:text]))}" +
       "&format=json"
 
