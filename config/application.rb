@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module SlackIntegrations
   ZEUS_TEAM    = 'zeuswpi'
-  ZEUS_TOKEN   = 'nSkfHbEoMbSExxM0qZB3MpTa'
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
