@@ -16,7 +16,7 @@ class RestoController < ApplicationController
       return
     end
 
-    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/week/#{day.strftime("%U").to_i + 1}.json"))
+    weekmenu = JSON.load(open("https://zeus.ugent.be/hydra/api/1.0/resto/menu/#{day.strftime("%Y")}/#{day.strftime("%V").to_i}.json"))
 
     menu = weekmenu[day.strftime("%Y-%m-%d")]
 
