@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   # Resto
   post '/resto'         => 'resto#resto'
+  get  '/resto'         => 'resto#resto'
 
   # Shorten
   post '/shorten'       => 'shorten#shorten'
