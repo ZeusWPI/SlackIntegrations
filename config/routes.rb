@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root 'quotes#index'
 
   # Cammie
-  post '/shoot'         => 'cammie#shoot'
-  post '/doorshot'      => 'cammie#doorshot'
+  # post '/shoot'         => 'cammie#shoot'
+  # post '/doorshot'      => 'cammie#doorshot'
 
   # Fucks
   post '/showfuck'      => 'fucks#show'
