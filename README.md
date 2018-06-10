@@ -6,8 +6,7 @@ Ieder bericht op slack dat begint met `fuck`, `fak` of `fack` wordt opgeslagen, 
 https://zeuswpi.slack.com/services/3181881731
 
 ### Resto
-Met het commando `/resto [dag]` kan het dagmenu uit de UGent resto s opgevraagd worden. Indien `[dag]` niet opgegeven is, wordt het menu van de dag weergegeven. Huidige mogel
-rgen` en `overmorgen`.
+Met het commando `/resto [dag]` kan het dagmenu uit de UGent resto s opgevraagd worden. Indien `[dag]` niet opgegeven is, wordt het menu van de dag weergegeven. Huidige mogelijkheden voor `[dag]` zijn `morgen` en `overmorgen`.
 
 https://zeuswpi.slack.com/services/3762759085
 
