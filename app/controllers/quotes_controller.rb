@@ -26,7 +26,7 @@ class QuotesController < ApplicationController
       @quote = Quote.find_by(id: id)
       if !@quote.nil?
         call_quote_webhook(params, @quote)
-        render plain: @quote.text
+        head :ok
         return
       end
     end
