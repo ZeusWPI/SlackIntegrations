@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.7.2'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -53,7 +54,7 @@ group :development do
 end
 
 group :production do
-  gem 'mysql2'
+  gem 'pg'
 end
 
 # gem 'rmagick'
