@@ -2,7 +2,7 @@ require "uri"
 require "net/http"
 
 class QuotesController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:create]
+  skip_before_action :verify_authenticity_token, :only => [:create]
   respond_to :html
 
   def index
@@ -16,7 +16,7 @@ class QuotesController < ApplicationController
 
     call_add_quote_webhook(params, @quote)
 
-    render :ok, text: ""
+    head :ok
   end
 
   def show
@@ -26,7 +26,7 @@ class QuotesController < ApplicationController
       @quote = Quote.find_by(id: id)
       if !@quote.nil?
         call_quote_webhook(params, @quote)
-        render :ok, text: ""
+        render plain: @quote.text
         return
       end
     end
@@ -34,9 +34,9 @@ class QuotesController < ApplicationController
     @quotes = Quote.where('text like ?', "%#{params[:text]}%")
     if !@quotes.empty?
       call_quote_webhook(params, @quotes.shuffle.first)
-      render :ok, text: ""
+      head :ok
     else
-      render :ok, text: "No such quote :'("
+      render plain: "No such quote :'("
     end
   end
 

@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #
 
-class Fuck < ActiveRecord::Base
+class Fuck < ApplicationRecord
   has_many :fuckers
 
   validates :name, presence: true

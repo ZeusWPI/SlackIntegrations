@@ -1,43 +1,41 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217152728) do
+ActiveRecord::Schema.define(version: 2015_02_17_152728) do
 
-  create_table "fuckers", force: true do |t|
-    t.integer  "fuck_id",    null: false
-    t.string   "user_id"
+  create_table "fuckers", force: :cascade do |t|
+    t.integer "fuck_id", null: false
+    t.string "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fucks", force: true do |t|
-    t.string   "name"
-    t.integer  "amount"
+  create_table "fucks", force: :cascade do |t|
+    t.string "name"
+    t.integer "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name"], name: "index_fucks_on_name"
   end
 
-  add_index "fucks", ["name"], name: "index_fucks_on_name"
-
-  create_table "quotes", force: true do |t|
-    t.string   "token"
-    t.string   "team_id"
-    t.string   "channel_id"
-    t.string   "channel_name"
-    t.string   "user_id"
-    t.string   "user_name"
-    t.string   "command"
-    t.text     "text",         limit: 1000
+  create_table "quotes", force: :cascade do |t|
+    t.string "token"
+    t.string "team_id"
+    t.string "channel_id"
+    t.string "channel_name"
+    t.string "user_id"
+    t.string "user_name"
+    t.string "command"
+    t.text "text", limit: 1000
     t.datetime "created_at"
     t.datetime "updated_at"
   end

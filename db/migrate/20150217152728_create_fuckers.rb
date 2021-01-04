@@ -1,4 +1,4 @@
-class CreateFuckers < ActiveRecord::Migration
+class CreateFuckers < ActiveRecord::Migration[4.2]
   def change
     create_table :fuckers do |t|
       t.references :fuck, null: false

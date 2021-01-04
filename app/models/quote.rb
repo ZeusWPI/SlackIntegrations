@@ -15,6 +15,6 @@
 #  updated_at   :datetime
 #
 
-class Quote < ActiveRecord::Base
+class Quote < ApplicationRecord
   validates :text, presence: true
 end

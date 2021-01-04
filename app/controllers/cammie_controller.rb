@@ -6,7 +6,7 @@ class CammieController < ApplicationController
 #  # include CammieHelper
 #  # include Magick
 #
-#  skip_before_filter :verify_authenticity_token, :only => [:shoot, :doorshot]
+#  skip_before_action :verify_authenticity_token, :only => [:shoot, :doorshot]
 #
 #  CAMMIEDIRECTORY = %w[system cammie screenshots]
 #

@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #
 
-class Fucker < ActiveRecord::Base
+class Fucker < ApplicationRecord
   belongs_to :fuck, counter_cache: :amount
 
   validates :user_id, presence: true
